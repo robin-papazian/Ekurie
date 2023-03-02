@@ -1,5 +1,6 @@
 
 ###> symfony/framework-bundle ###
+/api.md
 /SPEC.md
 /.env
 /.env.local

@@ -1,6 +1,6 @@
 # Ekurie
 
-A collaborative learning platform for university student that needs to learn information by heart
+A collaborative learning platform for university students that needs to learn pedagogique material by heart
 
 ## SetUp on your local machine
 
@@ -9,7 +9,7 @@ A collaborative learning platform for university student that needs to learn inf
 > git clone https://github.com/robin-papazian/Ekurie.git
 
 2. rename template-env to .env
-3. Copy-paste and edite your new .env file
+3. copy-paste and edite the script below in your new .env file
 
 ```
 APP_ENV=dev
@@ -18,10 +18,14 @@ DATABASE_URL="mysql://HOSTNAME:PASSWORD@127.0.0.1:3306/ekurie
 CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
 ```
 
-4. Create the database
+4. install the dependances
+
+> composer install
+
+5. create the database
 
 > php bin/console doctrine:database:create
 
-5. Make the migrations
+5. make the migrations
 
 > php bin/console doctrine:migrations:migrate
