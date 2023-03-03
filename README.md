@@ -29,3 +29,7 @@ CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
 5. make the migrations
 
 > php bin/console doctrine:migrations:migrate
+
+5. run the fixtures
+
+> php bin/console doctrine:fixture:load

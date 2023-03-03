@@ -2,15 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
+use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\Patch;
+use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\SemesterRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\GetCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SemesterRepository::class)]
 #[ApiResource(
     description: 'Period of the year of a university path',
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Patch(),
+        new Put()
+    ],
     normalizationContext: [
         'groups' => ['semester:read'],
     ],
@@ -41,7 +53,7 @@ class Semester
     #[ORM\ManyToOne(inversedBy: 'semesters')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups('semester:read')]
-    private ?Ekurie $ekurie_id = null;
+    private ?Ekurie $ekurie = null;
 
     public function getId(): ?int
     {
@@ -98,13 +110,13 @@ class Semester
 
     public function getEkurieId(): ?Ekurie
     {
-        return $this->ekurie_id;
+        return $this->ekurie;
     }
 
     #[Groups('semester:write')]
-    public function setEkurieId(?Ekurie $ekurie_id): self
+    public function setEkurieId(?Ekurie $ekurie): self
     {
-        $this->ekurie_id = $ekurie_id;
+        $this->ekurie = $ekurie;
 
         return $this;
     }

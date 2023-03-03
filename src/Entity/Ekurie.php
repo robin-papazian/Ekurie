@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
+
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
 use App\Repository\EkurieRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EkurieRepository::class)]
@@ -41,9 +44,10 @@ class Ekurie
 
     #[ORM\Column(length: 255)]
     #[Groups(['ekurie:read', 'ekurie:write'])]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'ekurie_id', targetEntity: Semester::class)]
+    #[ORM\OneToMany(mappedBy: 'ekurie', targetEntity: Semester::class)]
     #[Groups(['ekurie:read'])]
     private Collection $semesters;
 

@@ -1,5 +1,6 @@
 
 ###> symfony/framework-bundle ###
+/ekurie.md
 /api.md
 /SPEC.md
 /.env
