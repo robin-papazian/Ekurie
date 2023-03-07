@@ -47,7 +47,7 @@ final class EkurieFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'name' => self::faker()->text(10),
+            'name' => self::faker()->unique()->jobTitle(),
         ];
     }
 

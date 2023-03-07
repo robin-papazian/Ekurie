@@ -15,6 +15,7 @@ use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -35,6 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         'groups' => ['ekurie:write']
     ]
 )]
+#[UniqueEntity(fields: ['name'], message: 'Ce nom d\'Ekurie existe déjà.')]
 class Ekurie
 {
     #[ORM\Id]
@@ -43,12 +45,12 @@ class Ekurie
     #[Groups('ekurie:read')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name: 'name', type: 'string', length: 50, unique: true)]
     #[Groups(['ekurie:read', 'ekurie:write'])]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     #[Assert\NotBlank]
     #[Assert\Length(min: 4, max: 20, maxMessage: 'Le nom d\'une Ekurie est limité à 20 caractères')]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\OneToMany(mappedBy: 'ekurie', targetEntity: Semester::class)]
     #[Groups(['ekurie:read'])]
@@ -64,7 +66,7 @@ class Ekurie
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
