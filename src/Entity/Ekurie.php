@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EkurieRepository::class)]
 #[ApiResource(
@@ -45,6 +46,8 @@ class Ekurie
     #[ORM\Column(length: 255)]
     #[Groups(['ekurie:read', 'ekurie:write'])]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4, max: 20, maxMessage: 'Le nom d\'une Ekurie est limité à 20 caractères')]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'ekurie', targetEntity: Semester::class)]
