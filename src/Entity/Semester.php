@@ -55,6 +55,10 @@ class Semester
     #[Groups('semester:read')]
     private ?Ekurie $ekurie = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['semester:read', 'semester:write'])]
+    private ?string $name = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -117,6 +121,18 @@ class Semester
     public function setEkurieId(?Ekurie $ekurie): self
     {
         $this->ekurie = $ekurie;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
