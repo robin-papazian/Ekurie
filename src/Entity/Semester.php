@@ -35,11 +35,10 @@ class Semester
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('semester:read')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['semester:read', 'semester:write'])]
+    #[Groups(['semester:read', 'semester:write', 'ekurie:item:read'])]
     private ?string $enumerate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -52,11 +51,10 @@ class Semester
 
     #[ORM\ManyToOne(inversedBy: 'semesters')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('semester:read')]
     private ?Ekurie $ekurie = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['semester:read', 'semester:write'])]
+    #[Groups(['semester:read', 'semester:write', 'ekurie:item:read'])]
     private ?string $name = null;
 
     public function getId(): ?int
@@ -81,11 +79,7 @@ class Semester
         return $this;
     }
 
-    public function setBitch(): int
-    {
-        return 0;
-    }
-
+    #[Groups(['ekurie:item:read'])]
     public function getStartingDate(): ?\DateTimeInterface
     {
         return $this->starting_date;
@@ -99,6 +93,7 @@ class Semester
         return $this;
     }
 
+    #[Groups(['ekurie:item:read'])]
     public function getEndingDate(): ?\DateTimeInterface
     {
         return $this->ending_date;
@@ -112,6 +107,7 @@ class Semester
         return $this;
     }
 
+    #[Groups('semester:read')]
     public function getEkurieId(): ?Ekurie
     {
         return $this->ekurie;

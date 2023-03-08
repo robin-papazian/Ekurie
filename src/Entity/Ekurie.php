@@ -23,7 +23,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     description: "A community that offer studies materials for exams preparation on various university paths",
     operations: [
-        new Get(),
+        new Get(
+            normalizationContext: [
+                'groups' => ['ekurie:read', 'ekurie:item:read']
+            ],
+        ),
         new GetCollection(),
         new Post(),
         new Patch(),
@@ -42,7 +46,6 @@ class Ekurie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('ekurie:read')]
     private ?int $id = null;
 
     #[ORM\Column(name: 'name', type: 'string', length: 50, unique: true)]
